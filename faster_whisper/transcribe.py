@@ -129,14 +129,19 @@ class WhisperModel:
             )
         except Exception as e:
             print(f"Error loading the model: {e}")
-
-        tokenizer_file = os.path.join(model_path, "tokenizer.json")
-        if os.path.isfile(tokenizer_file):
-            self.hf_tokenizer = tokenizers.Tokenizer.from_file(tokenizer_file)
-        else:
-            self.hf_tokenizer = tokenizers.Tokenizer.from_pretrained(
-                "openai/whisper-tiny" + ("" if self.model.is_multilingual else ".en")
-            )
+        try:
+            tokenizer_file = os.path.join(model_path, "tokenizer.json")
+        except Exception as e:
+            print(f"Error loading the tokenizer_file: {e}")
+        try:
+            if os.path.isfile(tokenizer_file):
+                self.hf_tokenizer = tokenizers.Tokenizer.from_file(tokenizer_file)
+            else:
+                self.hf_tokenizer = tokenizers.Tokenizer.from_pretrained(
+                    "openai/whisper-tiny" + ("" if self.model.is_multilingual else ".en")
+                )
+        except Exception as e:
+            print(f"Error loading the self.hf_tokenizer: {e}")
 
         self.feature_extractor = FeatureExtractor()
         self.num_samples_per_token = self.feature_extractor.hop_length * 2
