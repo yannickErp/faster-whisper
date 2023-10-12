@@ -116,13 +116,16 @@ class WhisperModel:
             local cached file if it exists.
         """
         self.logger = get_logger()
-
         model_path='models/models--guillaumekln--faster-whisper-large-v2/snapshots/f541c54c566e32dc1fbce16f98df699208837e8b'
-        print(f'In main folder: {subprocess.check_output(f"ls", shell=True, universal_newlines=True)}')
-        print(f'In models folder: {subprocess.check_output(f"ls models", shell=True, universal_newlines=True)}')
-        
-        print(f'In intern model folder: {subprocess.check_output(f"ls models/models--guillaumekln--faster-whisper-large-v2", shell=True, universal_newlines=True)}')
-        print(f'In snapshots model folder: {subprocess.check_output(f"ls models/models--guillaumekln--faster-whisper-large-v2/snapshots/f541c54c566e32dc1fbce16f98df699208837e8b", shell=True, universal_newlines=True)}')
+        try:
+            print(f'In main folder: {subprocess.check_output(f"ls", shell=True, universal_newlines=True)}')
+            print(f'In models folder: {subprocess.check_output(f"ls models", shell=True, universal_newlines=True)}')
+            
+            print(f'In intern model folder: {subprocess.check_output(f"ls models/models--guillaumekln--faster-whisper-large-v2", shell=True, universal_newlines=True)}')
+            print(f'In snapshots model folder: {subprocess.check_output(f"ls models/models--guillaumekln--faster-whisper-large-v2/snapshots/f541c54c566e32dc1fbce16f98df699208837e8b", shell=True, universal_newlines=True)}')
+        except Exception as e:
+            print(f"Error ls: {e}")
+            traceback.print_exc()
         try:
             self.model = ctranslate2.models.Whisper(
                 model_path,
