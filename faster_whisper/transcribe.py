@@ -127,16 +127,20 @@ class WhisperModel:
                 intra_threads=cpu_threads,
                 inter_threads=num_workers,
             )
+            print(f'model: {self.model}')
         except Exception as e:
             print(f"Error loading the model: {e}")
         try:
             tokenizer_file = os.path.join(model_path, "tokenizer.json")
+            print(f'tokenizer_file: {tokenizer_file}')
         except Exception as e:
             print(f"Error loading the tokenizer_file: {e}")
         try:
             if os.path.isfile(tokenizer_file):
+                print(f'Loading tokenizer from file: {tokenizer_file}')
                 self.hf_tokenizer = tokenizers.Tokenizer.from_file(tokenizer_file)
             else:
+                print(f'Loading tokenizer from pretrained: {"openai/whisper-tiny" + ("" if self.model.is_multilingual else ".en")}')
                 self.hf_tokenizer = tokenizers.Tokenizer.from_pretrained(
                     "openai/whisper-tiny" + ("" if self.model.is_multilingual else ".en")
                 )
