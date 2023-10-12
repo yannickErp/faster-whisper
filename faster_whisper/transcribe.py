@@ -118,14 +118,17 @@ class WhisperModel:
 
         model_path='models/models--guillaumekln--faster-whisper-large-v2/snapshots/f541c54c566e32dc1fbce16f98df699208837e8b'
 
-        self.model = ctranslate2.models.Whisper(
-            model_path,
-            device=device,
-            device_index=device_index,
-            compute_type=compute_type,
-            intra_threads=cpu_threads,
-            inter_threads=num_workers,
-        )
+        try:
+            self.model = ctranslate2.models.Whisper(
+                model_path,
+                device=device,
+                device_index=device_index,
+                compute_type=compute_type,
+                intra_threads=cpu_threads,
+                inter_threads=num_workers,
+            )
+        except Exception as e:
+            print(f"Error loading the model: {e}")
 
         tokenizer_file = os.path.join(model_path, "tokenizer.json")
         if os.path.isfile(tokenizer_file):
