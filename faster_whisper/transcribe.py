@@ -118,8 +118,10 @@ class WhisperModel:
         self.logger = get_logger()
 
         model_path='models/models--guillaumekln--faster-whisper-large-v2/snapshots/f541c54c566e32dc1fbce16f98df699208837e8b'
-        bash_command = "find ."
-        result = subprocess.run(bash_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        print(f'In main folder: {subprocess.check_output(f"ls", shell=True, universal_newlines=True)}')
+        print(f'In models folder: {subprocess.check_output(f"ls /models", shell=True, universal_newlines=True)}')
+        
+        print(f'In intern model folder: {subprocess.check_output(f"ls /models/models--guillaumekln--faster-whisper-large-v2", shell=True, universal_newlines=True)}')
         # Check for errors
         if result.returncode == 0:
             # Split the output into lines and print them
