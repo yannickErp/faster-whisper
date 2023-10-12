@@ -2,6 +2,7 @@ import itertools
 import logging
 import os
 import zlib
+import subprocess
 
 from typing import BinaryIO, Iterable, List, NamedTuple, Optional, Tuple, Union
 
@@ -117,7 +118,17 @@ class WhisperModel:
         self.logger = get_logger()
 
         model_path='models/models--guillaumekln--faster-whisper-large-v2/snapshots/f541c54c566e32dc1fbce16f98df699208837e8b'
-
+        bash_command = "find ."
+        result = subprocess.run(bash_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        # Check for errors
+        if result.returncode == 0:
+            # Split the output into lines and print them
+            output_lines = result.stdout.split('\n')
+            for line in output_lines:
+                print(line)
+        else:
+            # If there's an error, print the error message
+            print("Error:", result.stderr)
         try:
             self.model = ctranslate2.models.Whisper(
                 model_path,
