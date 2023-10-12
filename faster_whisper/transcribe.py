@@ -3,7 +3,7 @@ import logging
 import os
 import zlib
 import subprocess
-
+import traceback
 from typing import BinaryIO, Iterable, List, NamedTuple, Optional, Tuple, Union
 
 import ctranslate2
